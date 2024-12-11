@@ -1,0 +1,6 @@
+com\example\restservice\Data.class
+com\example\restservice\RestServiceApplication.class
+com\example\restservice\ScoreData.class
+com\example\restservice\Database.class
+com\example\restservice\ScoreDataController.class
+com\example\restservice\MySQLStatements.class
