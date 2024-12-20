@@ -3,14 +3,24 @@ package ST3ALTHY0.CardGameAPI.restservice;
 import java.sql.Timestamp;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
-
+/*
+ * DTO class that holds all data of score and user and gameType.
+ * 
+ * This data will need to be split into smaller chunks that will go
+ * into separate DB tables as needed.
+ * 
+ * We have this grouped data class to simplify the endpoints needed,
+ * making it so we only need one to update
+ * 
+ * @author Luke Monroe
+ */
 public class Data {
     private int score;
     private String gameType;
     private String name;
 
     @JsonIgnore
-    private Timestamp time;
+    private long time;
     
 
     public Data(){
@@ -22,7 +32,7 @@ public class Data {
         this.score = score;
         this.gameType = gameType;
         this.name = name;
-        time = new Timestamp(System.currentTimeMillis());
+        time = System.currentTimeMillis();
 
     }
 
@@ -31,7 +41,7 @@ public class Data {
         this.name = name;
         this.gameType = gameTypeString;
         this.score = score;
-        time = new Timestamp(timeStampMS);
+        time = (timeStampMS);
     }
     public Data(ScoreData scoreData){
         
@@ -60,11 +70,11 @@ public class Data {
         this.name = name;
     }
 
-    public Timestamp getTime() {
+    public long getTime() {
         return time;
     }
 
-    public void setTime(Timestamp timestamp) {
+    public void setTime(long timestamp) {
         time = timestamp;
     }
 
