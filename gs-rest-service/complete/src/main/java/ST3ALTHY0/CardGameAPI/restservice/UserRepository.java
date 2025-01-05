@@ -11,5 +11,8 @@ public interface UserRepository extends JpaRepository<User, Integer> {
     User findByUsername(String username);//might not this, i think we only need to find user by userID
 //additionally these methods are likely redundant because JPA auto adds basic CRUD functions like these
 
+    User saveAndFlush(User user);
+
+    
 
 }

@@ -20,6 +20,6 @@ public class GameService {
     //String gameType
     public Game findByGameType(String gameType) {
         return gameRepository.findByGameType(gameType)
-                .orElseThrow(() -> new RuntimeException("Game type not found"));
+                .orElseThrow(() -> new RuntimeException("Game type not found")); //i think this exception might be redundant because we should check gameType in ScoreDataController
     }
 }

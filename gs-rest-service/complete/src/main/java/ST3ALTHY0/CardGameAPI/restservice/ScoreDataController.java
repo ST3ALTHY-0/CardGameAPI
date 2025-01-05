@@ -5,11 +5,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.server.ResponseStatusException;
 
 
 /*
@@ -45,31 +46,30 @@ public class ScoreDataController {
      * endpoint for Putting a User in the DB
      */
     @PutMapping("/scoreData")
-    public boolean updateScore(@RequestParam String username, @RequestParam String gameType, @RequestParam int scoreValue) {
+    public void updateScore(@RequestBody Data scoreRequest) {
+        String username = scoreRequest.getName();
+        String gameType = scoreRequest.getGameType();
+        int scoreValue = scoreRequest.getScore();
+        if (username == null || username.trim().isEmpty()) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Username cannot be empty");
+        }
+        if (!gameType.equals("Easy") && !gameType.equals("Medium") && !gameType.equals("Hard")) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Game type " + gameType + " not allowed");
+        }
+        if (scoreValue < 0) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Negative Score is not allowed");
+        }
     try{
-        addUser(username);
+        userService.addUser(username);
         addScore(username, gameType, scoreValue);
-        return true;
     }catch(Exception e){
         System.out.println("Error: " + e.getMessage());
-        return false;
     }
-    }
-
-    /*
-     * add user to the DB 'Users' Table
-     */
-    private void addUser(String username) {
-        User user = new User();
-        user.setUsername(username);
-        userService.addUser(user);
-        
     }
 
     /*
      * add score to the DB 'Scores' Table
      */
-
     private void addScore(String username, String gameType, int scoreValue){
         Score score = new Score();
 
@@ -78,7 +78,7 @@ public class ScoreDataController {
         long time = System.currentTimeMillis();
 
         score.setScoreId(scoreValue);
-        score.setUserId(user);//this line is a little dumb seeing as we just created the user above in addUser() but not too bad.
+        score.setUserId(user);
         score.setGameId(game);
         score.setTimeStamp(time);
         scoreService.addScore(score);

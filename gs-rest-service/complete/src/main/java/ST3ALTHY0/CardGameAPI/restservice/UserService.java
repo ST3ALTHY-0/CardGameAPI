@@ -11,7 +11,7 @@ import jakarta.websocket.server.ServerEndpoint;
 @Service
 public class UserService {
 
-    private final UserRepository userRepository;// we use the repository
+    private final UserRepository userRepository;// we use the repository to do crud stuff
 
     // could also make a Logger class which we could make a variable for and assign
     // to here.
@@ -21,7 +21,7 @@ public class UserService {
         this.userRepository = userRepository;
     }
 
-    public User addUser(User user) {
+    private User addUser(User user) {//could also add checked exception here, make this method throw some exception and have the implementing class handle it
         try {
             return userRepository.saveAndFlush(user); // This will insert or update the user
         } catch (DataIntegrityViolationException e) {
@@ -31,13 +31,19 @@ public class UserService {
         }
     }
 
+    public void addUser(String username) {
+        User user = new User();
+        user.setUsername(username);
+        addUser(user);
+        }
+
     public User findByUsername(String username) {
         User user = userRepository.findByUsername(username);
-        
+
         if (user != null){
             return user;
         }else{
-            System.out.println("User " + username + " does not exist.");
+            System.out.println("User " + username + " does not exist. (or maybe somethings broken)");
             return null;
         }
     }

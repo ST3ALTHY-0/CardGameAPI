@@ -4,9 +4,7 @@ ST3ALTHY0\CardGameAPI\restservice\Game.class
 ST3ALTHY0\CardGameAPI\restservice\ScoreData.class
 ST3ALTHY0\CardGameAPI\restservice\ScoreDataController.class
 ST3ALTHY0\CardGameAPI\restservice\User.class
-ST3ALTHY0\CardGameAPI\restservice\Database2.class
 ST3ALTHY0\CardGameAPI\restservice\Score.class
-ST3ALTHY0\CardGameAPI\restservice\HighScoreDTO.class
 ST3ALTHY0\CardGameAPI\restservice\ScoreController.class
 ST3ALTHY0\CardGameAPI\restservice\UserRepository.class
 ST3ALTHY0\CardGameAPI\restservice\UserService.class

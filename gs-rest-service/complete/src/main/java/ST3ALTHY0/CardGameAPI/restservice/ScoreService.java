@@ -4,8 +4,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -18,9 +16,12 @@ public class ScoreService {
         this.scoreRepository = scoreRepository;
     }
 
+
     public List<Data> findTop10HighScores(){
         List<Object[]> rawResults = scoreRepository.findTop10HighScores();
         List<Data> dataList = new ArrayList<>();
+
+        //we parse the rawResults and create Data obj out of them to add to dataList
         for (Object[] row : rawResults) {
             String username = (String) row[0];
             String gameType = (String) row[1];
